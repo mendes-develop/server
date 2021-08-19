@@ -1,4 +1,4 @@
-FROM node:16-alpine3.11
+FROM node:16.7.0
 
 LABEL version="1.0"
 LABEL description="Development image for test"
