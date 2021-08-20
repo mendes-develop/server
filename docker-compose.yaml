@@ -4,7 +4,7 @@ services:
    test-api:
       restart: always
       build:
-         context: ./server-test-service
+         context: ./server-test
          dockerfile: Dockerfile
       container_name: express_app
       # volumes allow sharing of data in run-time between host and container
@@ -14,9 +14,9 @@ services:
          # map current local directory to the /app inside the container
          #This is a must for development in order to update our container whenever a change to the source code is made. Without this, you would have to rebuild the image each time you make a change to source code.
 
-         - ./server-test-service:/app
-      # ports:
-      #    - 5000:5000
+         - ./server-test:/app
+      ports:
+         - 5000:5000 
       depends_on:
          - mongodb
       environment:
@@ -30,9 +30,9 @@ services:
       restart: always
       ports:
          - 27017:27017
-      environment:
-         MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
-         MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      # environment:
+      #    MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      #    MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
       volumes:
          # for persistence storage
          - mongodb-data:/data/db
@@ -48,13 +48,13 @@ services:
       ports:
          - 8081:8081
       environment:
-         ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USERNAME}
-         ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD}
+   #       ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USERNAME}
+   #       ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD}
          ME_CONFIG_MONGODB_SERVER: mongodb
-         ME_CONFIG_BASICAUTH_USERNAME: admin
-         ME_CONFIG_BASICAUTH_PASSWORD: admin123456
+         # ME_CONFIG_BASICAUTH_USERNAME: admin
+         # ME_CONFIG_BASICAUTH_PASSWORD: admin123456
       volumes:
-         - mongodb-data
+         - mongodb-data:/data/db
       networks:
          - express-api
 
