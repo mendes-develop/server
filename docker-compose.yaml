@@ -4,7 +4,7 @@ services:
    test-api:
       restart: always
       build:
-         context: ./server-test
+         context: ./server-test-service
          dockerfile: Dockerfile
       container_name: express_app
       # volumes allow sharing of data in run-time between host and container
@@ -14,7 +14,7 @@ services:
          # map current local directory to the /app inside the container
          #This is a must for development in order to update our container whenever a change to the source code is made. Without this, you would have to rebuild the image each time you make a change to source code.
 
-         - ./server-test:/app
+         - ./server-test-service:/app
       # ports:
       #    - 5000:5000
       depends_on:
